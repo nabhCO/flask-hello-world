@@ -51,5 +51,34 @@ def db_insert():
     conn.commit()
     conn.close()
     return "Successfully added data to Basketball table"
+
+
+@app.route('/db_select')
+def db_select():
+
+    conn = psycopg2.connect("postgresql://hello_world_db_v0i1_user:Jv5R5vjnTCEJ6rxXoBluoI7u8JKDg1zx@dpg-d797f66uk2gs73e8c7ug-a/hello_world_db_v0i1")
+    cur = conn.cursor()
+
+    cur.execute('''
+    SELECT * FROM Basketball;
+    ''')
+
+    records = cur.fetchall()
+
+    table_str = "<table>"
+
+    for row in records:
+        table_str += "<tr>"
+        
+        for data in row:
+            table_str += "<td> {} </td>".format(data)
+            
+        table_str += "</tr>"
+        
+    table_str += "</table>"
+
+    return table_str
+        
+        
     
-    
+
